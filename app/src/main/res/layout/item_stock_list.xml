@@ -12,7 +12,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="Stock Name" />
+        tools:text="Stock Name" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvStockCode"
@@ -21,7 +21,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvStockName"
-        android:text="Stock Code" />
+        tools:text="Stock Code" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvStockAmount"
@@ -30,6 +30,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvStockCode"
-        android:text="Stock Amount" />
+        tools:text="Stock Amount" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

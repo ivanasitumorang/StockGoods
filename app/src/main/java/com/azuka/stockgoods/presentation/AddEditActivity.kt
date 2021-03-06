@@ -43,6 +43,10 @@ class AddEditActivity : AppCompatActivity() {
     private fun setupContent() {
         when (extraAction) {
             StockActionEnum.Add.code -> {
+                binding.btnSave.setOnClickListener {
+                    val stock = getStock()
+                    saveStock(stock)
+                }
             }
 
             StockActionEnum.Edit.code -> {
@@ -56,31 +60,37 @@ class AddEditActivity : AppCompatActivity() {
                         }
                     }
                     btnSave.setOnClickListener {
-                        val stock = Stock(
-                            code = etStockCode.text.toString(),
-                            name = etStockName.text.toString(),
-                            amount = etStockAmount.text.toString().toLong(),
-                            unit = etStockUnit.text.toString()
-                        )
-                        saveData(stock)
+                        val stock = getStock()
+                        saveStock(stock)
                     }
                 }
             }
         }
     }
 
-    private fun saveData(stock: Stock) {
-        // My top posts by number of stars
+    private fun getStock(): Stock = binding.run {
+        Stock(
+            code = etStockCode.text.toString(),
+            name = etStockName.text.toString(),
+            amount = etStockAmount.text.toString().toLong(),
+            unit = etStockUnit.text.toString()
+        )
+    }
+
+    private fun saveStock(stock: Stock) {
         val stocks = database.child(StockReferences.STOCKS)
         stocks.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (postSnapshot in dataSnapshot.children) {
                     val stockValue = postSnapshot.getValue<Stock>()
-                    stockValue?.let {
-                        if (it.code == stock.code) {
-                            stocks.child(postSnapshot.key!!).setValue(stock)
-                        }
+                    if (stockValue!!.code == stock.code) {
+                        stocks.child(postSnapshot.key!!).setValue(stock)
+                        return
                     }
+                }
+                val newKey = stocks.push().key
+                newKey?.let {
+                    stocks.child(it).setValue(stock)
                 }
             }
 
