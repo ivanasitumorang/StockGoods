@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "622416563479",
+    "project_id": "stock-goods",
+    "storage_bucket": "stock-goods.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:622416563479:android:4c1ee96261ed65ffbbbb52",
+        "android_client_info": {
+          "package_name": "com.azuka.stockgoods"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "622416563479-lhk2tif9dli5hrd3nl4mqjoh9f996elm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBn6EQleGVad8EsBQe5nHEcZHraiQyYKUc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "622416563479-lhk2tif9dli5hrd3nl4mqjoh9f996elm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
