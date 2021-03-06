@@ -10,6 +10,6 @@ interface AppConstant {
 
     object INTENT {
         const val TAG_ACTIONS = "action"
-        const val TAG_STOCK_CODE = "stock_code"
+        const val TAG_STOCK = "stock_code"
     }
 }

@@ -48,16 +48,16 @@ class MainActivity : AppCompatActivity() {
 
         val adapter = StockListAdapter(options) { stock ->
             Toast.makeText(this, stock.name, Toast.LENGTH_SHORT).show()
-            navigateToAddEditPage(StockActionEnum.Edit, stock.code)
+            navigateToAddEditPage(StockActionEnum.Edit, stock)
         }
         binding.rvStock.adapter = adapter
     }
 
-    private fun navigateToAddEditPage(action: StockActionEnum, stockCode: String? = null) {
+    private fun navigateToAddEditPage(action: StockActionEnum, stock: Stock? = null) {
         startActivity(
             Intent(this, AddEditActivity::class.java).apply {
                 putExtra(INTENT.TAG_ACTIONS, action.code)
-                putExtra(INTENT.TAG_STOCK_CODE, stockCode)
+                putExtra(INTENT.TAG_STOCK, stock)
             }
         )
     }

@@ -4,16 +4,57 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     tools:context=".presentation.AddEditActivity">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvDummy"
-        android:layout_width="wrap_content"
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etStockCode"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Kode Barang"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etStockName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Nama Barang"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etStockCode" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etStockAmount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Jumlah"
+        android:inputType="number"
+        app:layout_constraintEnd_toStartOf="@+id/etStockUnit"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etStockName" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etStockUnit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Satuan"
+        app:layout_constraintBaseline_toBaselineOf="@+id/etStockAmount"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/etStockAmount" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSave"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Add / Edit" />
+        android:text="Simpan"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
