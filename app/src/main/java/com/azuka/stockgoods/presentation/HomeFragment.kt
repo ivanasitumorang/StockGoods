@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.Toast
 import com.azuka.stockgoods.BaseFragment
 import com.azuka.stockgoods.R
+import com.azuka.stockgoods.constant.StockReferences
 import com.azuka.stockgoods.databinding.FragmentHomeBinding
 import com.azuka.stockgoods.model.Stock
 import com.firebase.ui.database.FirebaseRecyclerOptions
@@ -20,10 +21,6 @@ import com.google.firebase.ktx.Firebase
 
 class HomeFragment : BaseFragment() {
 
-    companion object {
-        private const val TAG = "Hasil"
-    }
-
     private lateinit var adapter: StockListAdapter
 
     private val binding: FragmentHomeBinding by lazy {
@@ -37,8 +34,20 @@ class HomeFragment : BaseFragment() {
     override val viewLayout: Int = R.layout.fragment_home
 
     override fun onFragmentReady(view: View, savedInstanceState: Bundle?) {
+//        setDummyData()
+        setupDataListener()
+        setupUIListener()
+    }
 
-        val query = database.child("stocks")
+    private fun setupUIListener() {
+        binding.fabAdd.setOnClickListener {
+            val toAdd = HomeFragmentDirections.actionHomeToAddEditStock()
+            navController.navigate(toAdd)
+        }
+    }
+
+    private fun setupDataListener() {
+        val query = database.child(StockReferences.STOCKS)
         val options = FirebaseRecyclerOptions.Builder<Stock>()
             .setQuery(query, Stock::class.java)
             .setLifecycleOwner(this)
@@ -47,10 +56,7 @@ class HomeFragment : BaseFragment() {
         adapter = StockListAdapter(options) { stock ->
             Toast.makeText(requireContext(), stock.name, Toast.LENGTH_SHORT).show()
         }
-
         binding.rvStock.adapter = adapter
-
-        setDummyData()
     }
 
     private fun setDummyData() {
@@ -86,6 +92,6 @@ class HomeFragment : BaseFragment() {
         )
 
         // save data to db with child ("stock") -> create if not exists
-        database.child("stocks").setValue(stockList)
+        database.child(StockReferences.STOCKS).setValue(stockList)
     }
 }

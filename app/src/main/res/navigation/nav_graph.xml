@@ -8,8 +8,9 @@
         android:name="com.azuka.stockgoods.presentation.HomeFragment"
         android:label="HomeFragment" >
         <action
-            android:id="@+id/action_homeFragment_to_addEditStockFragment"
-            app:destination="@id/addEditStockFragment" />
+            android:id="@+id/action_home_to_addEditStock"
+            app:destination="@id/addEditStockFragment"
+            app:popUpTo="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/addEditStockFragment"
