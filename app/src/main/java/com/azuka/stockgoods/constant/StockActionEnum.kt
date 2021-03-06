@@ -6,7 +6,7 @@ package com.azuka.stockgoods.constant
  * Android Engineer
  */
 
-enum class StockActionEnum {
-    Add,
-    Edit
+enum class StockActionEnum(val code: Int) {
+    Add(code = 0),
+    Edit(code = 1)
 }

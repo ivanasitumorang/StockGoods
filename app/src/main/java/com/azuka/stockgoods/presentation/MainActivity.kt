@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.azuka.stockgoods.constant.AppConstant.INTENT
 import com.azuka.stockgoods.constant.StockActionEnum
 import com.azuka.stockgoods.constant.StockReferences
 import com.azuka.stockgoods.databinding.ActivityMainBinding
@@ -34,10 +35,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupUIListener() {
         binding.fabAdd.setOnClickListener {
-            val toAdd = Intent(this, AddEditActivity::class.java).apply {
-                putExtra("action", StockActionEnum.Add.toString())
-            }
-            startActivity(toAdd)
+            navigateToAddEditPage(StockActionEnum.Add)
         }
     }
 
@@ -50,7 +48,17 @@ class MainActivity : AppCompatActivity() {
 
         val adapter = StockListAdapter(options) { stock ->
             Toast.makeText(this, stock.name, Toast.LENGTH_SHORT).show()
+            navigateToAddEditPage(StockActionEnum.Edit, stock.code)
         }
         binding.rvStock.adapter = adapter
+    }
+
+    private fun navigateToAddEditPage(action: StockActionEnum, stockCode: String? = null) {
+        startActivity(
+            Intent(this, AddEditActivity::class.java).apply {
+                putExtra(INTENT.TAG_ACTIONS, action.code)
+                putExtra(INTENT.TAG_STOCK_CODE, stockCode)
+            }
+        )
     }
 }
