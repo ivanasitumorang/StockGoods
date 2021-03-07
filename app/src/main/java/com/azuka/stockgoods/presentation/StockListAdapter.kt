@@ -28,6 +28,10 @@ class StockListAdapter(
         return ViewHolder(binding)
     }
 
+    override fun onBindViewHolder(holder: ViewHolder, position: Int, model: Stock) {
+        holder.bind(model, clickListener)
+    }
+
     class ViewHolder(private val binding: ItemStockListBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(stock: Stock, clickListener: (Stock) -> Unit) {
@@ -49,16 +53,11 @@ class StockListAdapter(
                 if (clContent.visibility == View.VISIBLE) {
                     clContent.visibility = View.GONE
                     ivToggle.setImageResource(R.drawable.ic_down)
-                }
-                else {
+                } else {
                     clContent.visibility = View.VISIBLE
                     ivToggle.setImageResource(R.drawable.ic_up)
                 }
             }
         }
-    }
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int, model: Stock) {
-        holder.bind(model, clickListener)
     }
 }
