@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Stock Goods</string>
+
+    <string name="stock_code">Kode Stok : %s</string>
+    <string name="stock_amount_unit">Jumlah Stok : %d %s</string>
 </resources>
