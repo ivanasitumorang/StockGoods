@@ -1,6 +1,7 @@
 package com.azuka.stockgoods.presentation
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.azuka.stockgoods.constant.AppConstant.INTENT
 import com.azuka.stockgoods.constant.StockActionEnum
@@ -45,23 +46,28 @@ class AddEditActivity : AppCompatActivity() {
             StockActionEnum.Add.code -> {
                 binding.btnSave.setOnClickListener {
                     val stock = getStock()
-                    saveStock(stock)
+                    saveStock(newStock = stock)
                 }
             }
 
             StockActionEnum.Edit.code -> {
                 binding.run {
-                    extraStock?.let {
-                        with(it) {
+                    extraStock?.let { currentStock ->
+                        with(currentStock) {
                             etStockCode.setText(code)
                             etStockName.setText(name)
                             etStockAmount.setText("$amount")
                             etStockUnit.setText(unit)
                         }
-                    }
-                    btnSave.setOnClickListener {
-                        val stock = getStock()
-                        saveStock(stock)
+
+                        btnSave.setOnClickListener {
+                            val stock = getStock()
+                            saveStock(currentStockCode = currentStock.code, newStock = stock)
+                        }
+                        btnDelete.visibility = View.VISIBLE
+                        btnDelete.setOnClickListener {
+                            deleteStock(currentStock)
+                        }
                     }
                 }
             }
@@ -77,21 +83,46 @@ class AddEditActivity : AppCompatActivity() {
         )
     }
 
-    private fun saveStock(stock: Stock) {
+    private fun saveStock(currentStockCode: String = "", newStock: Stock) {
+        val stocks = database.child(StockReferences.STOCKS)
+        stocks.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                for (postSnapshot in dataSnapshot.children) {
+                    val stockValue = postSnapshot.getValue<Stock>()
+                    if (stockValue!!.code == currentStockCode) {
+                        stocks.child(postSnapshot.key!!).setValue(newStock)
+                        stocks.removeEventListener(this)
+                        return
+                    }
+                }
+                val newKey = stocks.push().key
+                newKey?.let {
+                    stocks.child(it).setValue(newStock)
+                }
+                stocks.removeEventListener(this)
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                //
+            }
+        })
+        finish()
+    }
+
+    private fun deleteStock(stock: Stock) {
         val stocks = database.child(StockReferences.STOCKS)
         stocks.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (postSnapshot in dataSnapshot.children) {
                     val stockValue = postSnapshot.getValue<Stock>()
                     if (stockValue!!.code == stock.code) {
-                        stocks.child(postSnapshot.key!!).setValue(stock)
+                        stocks.child(postSnapshot.key!!).removeValue()
+//                        stocks.child(postSnapshot.key!!).setValue(null) // other way to delete
+                        stocks.removeEventListener(this)
                         return
                     }
                 }
-                val newKey = stocks.push().key
-                newKey?.let {
-                    stocks.child(it).setValue(stock)
-                }
+                stocks.removeEventListener(this)
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
