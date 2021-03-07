@@ -10,15 +10,11 @@ import com.azuka.stockgoods.constant.StockReferences
 import com.azuka.stockgoods.databinding.ActivityMainBinding
 import com.azuka.stockgoods.model.Stock
 import com.firebase.ui.database.FirebaseRecyclerOptions
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.database.FirebaseDatabase
 
 class MainActivity : AppCompatActivity() {
 
-    private val database: DatabaseReference by lazy {
-        Firebase.database.reference
-    }
+    private lateinit var database: FirebaseDatabase
 
     private val binding: ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
@@ -27,7 +23,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
+        database = FirebaseDatabase.getInstance()
+        database.setPersistenceEnabled(true)
         setupDataListener()
         setupUIListener()
 
@@ -40,7 +37,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupDataListener() {
-        val query = database.child(StockReferences.STOCKS)
+        val query = database.reference.child(StockReferences.STOCKS)
         val options = FirebaseRecyclerOptions.Builder<Stock>()
             .setQuery(query, Stock::class.java)
             .setLifecycleOwner(this)
