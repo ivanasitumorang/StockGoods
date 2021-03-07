@@ -2,7 +2,6 @@ package com.azuka.stockgoods.presentation
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.azuka.stockgoods.constant.AppConstant.INTENT
 import com.azuka.stockgoods.constant.StockActionEnum
@@ -44,7 +43,6 @@ class MainActivity : AppCompatActivity() {
             .build()
 
         val adapter = StockListAdapter(options) { stock ->
-            Toast.makeText(this, stock.name, Toast.LENGTH_SHORT).show()
             navigateToAddEditPage(StockActionEnum.Edit, stock)
         }
         binding.rvStock.adapter = adapter
